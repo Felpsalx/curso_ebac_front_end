@@ -49,6 +49,15 @@ h1{
     
 }
 
+.msgIguais{
+    margin-top: -50px;
+    color: blue;
+    display: none;
+    font-size: 20px;
+    
+    
+}
+
 #cmp-a{
     margin-bottom: 50px;
     font-size: 20px;
