@@ -5,6 +5,7 @@ $(document).ready(function(){
         const addTarefa = $('<li></li>');
         $(`<li>${input}</li>`).appendTo(addTarefa)
         $(addTarefa).appendTo('ul')
+        $('#tarefa').val('')
 
         $('li').click(function(){
             $(this).addClass('feito')
