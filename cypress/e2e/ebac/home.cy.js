@@ -24,7 +24,7 @@ describe("Testes de funcionalidades dos contatos", () => {
     cy.contains('Teste Cypress')
       .parent() 
       .within(() => {
-        cy.get('button').contains('Editar').click()
+        cy.get('button').contains('EDITAR').click()
       })
 
     cy.get('input[placeholder="Nome"]').clear().type('Cypress Editado')
@@ -45,7 +45,7 @@ describe("Testes de funcionalidades dos contatos", () => {
     cy.contains('Cypress Editado')
       .parent()
       .within(() => {
-        cy.get('button').contains('Remover').click()
+        cy.get('button').contains('DELETAR').click()
       })
 
     cy.get('li').should('not.contain.text', 'Cypress Editado')
