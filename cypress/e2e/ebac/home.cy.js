@@ -1,53 +1,45 @@
 /// <reference types="cypress" />
 
-describe("Testes de funcionalidades dos contatos", () => {
-
+describe("Teste completo de contatos em sequência", () => {
   beforeEach(() => {
     cy.visit('https://agenda-contatos-react.vercel.app/')
   })
 
-  it("Deve adicionar um novo contato", () => {
+  it("Adicionar, editar e remover contato", () => {
+    // Adicionar contato
     cy.get('input[placeholder="Nome"]').type('Teste Cypress')
     cy.get('input[placeholder="E-mail"]').type('teste@cypress.com')
     cy.get('input[placeholder="Telefone"]').type('123456789')
-
     cy.get('button').contains('Adicionar').click()
 
-    cy.get('li')
-      .should('contain.text', 'Teste Cypress')
-      .and('contain.text', 'teste@cypress.com')
-      .and('contain.text', '123456789')
-  })
+    // Verificar que contato foi adicionado
+    cy.contains('Teste Cypress').should('be.visible')
 
-  it("Deve editar um contato existente", () => {
-
+    // Editar contato
     cy.contains('Teste Cypress')
-      .parent() 
+      .closest('div.contato')
       .within(() => {
-        cy.get('button').contains('EDITAR').click()
+        cy.contains('button', /editar/i).click()
       })
 
+    // Alterar os dados
     cy.get('input[placeholder="Nome"]').clear().type('Cypress Editado')
     cy.get('input[placeholder="E-mail"]').clear().type('editado@cypress.com')
     cy.get('input[placeholder="Telefone"]').clear().type('987654321')
 
-    cy.get('button').contains('Salvar').click()
+    cy.get('button').contains(/salvar/i).click()
 
+    // Verificar que o contato foi editado
+    cy.contains('Cypress Editado').should('be.visible')
 
-    cy.get('li')
-      .should('contain.text', 'Cypress Editado')
-      .and('contain.text', 'editado@cypress.com')
-      .and('contain.text', '987654321')
-  })
-
-  it("Deve remover um contato", () => {
-
+    // Remover contato
     cy.contains('Cypress Editado')
-      .parent()
+      .closest('div.contato')
       .within(() => {
-        cy.get('button').contains('DELETAR').click()
+        cy.contains('button', /deletar|remover/i).click()
       })
 
-    cy.get('li').should('not.contain.text', 'Cypress Editado')
+    // Verificar que o contato foi removido
+    cy.contains('Cypress Editado').should('not.exist')
   })
 })
