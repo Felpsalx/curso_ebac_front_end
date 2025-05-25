@@ -6,16 +6,16 @@ describe("Teste completo de contatos em sequência", () => {
   })
 
   it("Adicionar, editar e remover contato", () => {
-    // Adicionar contato
+
     cy.get('input[placeholder="Nome"]').type('Teste Cypress')
     cy.get('input[placeholder="E-mail"]').type('teste@cypress.com')
     cy.get('input[placeholder="Telefone"]').type('123456789')
     cy.get('button').contains('Adicionar').click()
 
-    // Verificar que contato foi adicionado
+
     cy.contains('Teste Cypress').should('be.visible')
 
-    // Editar contato
+
     cy.contains('Teste Cypress')
       .closest('div.contato')
       .within(() => {
@@ -29,17 +29,16 @@ describe("Teste completo de contatos em sequência", () => {
 
     cy.get('button').contains(/salvar/i).click()
 
-    // Verificar que o contato foi editado
+
     cy.contains('Cypress Editado').should('be.visible')
 
-    // Remover contato
     cy.contains('Cypress Editado')
       .closest('div.contato')
       .within(() => {
         cy.contains('button', /deletar|remover/i).click()
       })
 
-    // Verificar que o contato foi removido
+
     cy.contains('Cypress Editado').should('not.exist')
   })
 })
